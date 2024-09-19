@@ -36,6 +36,7 @@ try {
       allowedHeaders: ["Content-Type", "Authorization"],
     }
   ))
+
   app.use(cookieParser());
 
   app.use(

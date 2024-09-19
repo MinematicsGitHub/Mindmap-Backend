@@ -22,10 +22,13 @@ const nodeMasterSchema = Joi.object({
   targetPosition: Joi.string().allow('', null),
   FontColor: Joi.string().allow('', null),
   FontStyle: Joi.string().allow('', null),
-  parentNode: Joi.string().allow('', null),
+  parent: Joi.string().allow('', null),
   FontSize: Joi.string().allow('', null),
   userId: Joi.string().required(),
   type: Joi.string().allow('', null),
+  level: Joi.number().allow('', null),
+  Collapsed: Joi.boolean().allow('', null),
+  
   
 });
 
@@ -59,7 +62,9 @@ export const createNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.userId = req.body.userId
     nodeMaster.borderRadius = req.body.borderRadius
     nodeMaster.type = req.body.type
-    nodeMaster.parentNode = req.body.parentNode
+    nodeMaster.parent = req.body.parent
+    nodeMaster.level = req.body.level
+    nodeMaster.Collapsed = req.body.Collapsed
     await nodeMaster.save();
     return res.status(201).json(nodeMaster);
   } catch (error) {
@@ -105,10 +110,12 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
         nodeMaster.targetPosition = element.targetPosition;
         nodeMaster.FontColor = element.FontColor
         nodeMaster.FontStyle = element.FontStyle
-        nodeMaster.parentNode = element.parentNode
+        nodeMaster.parent = element.parent
         nodeMaster.FontSize = element.FontSize
         nodeMaster.userId = element.userId
         nodeMaster.type = element.type
+        nodeMaster.level = element.level
+        nodeMaster.Collapsed = element.Collapsed
         responseData.push(await nodeMaster.save());
 
       }
@@ -171,7 +178,9 @@ export const updateNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.FontSize = req.body.FontSize
     nodeMaster.userId = req.body.userId
     nodeMaster.type = req.body.type
-    nodeMaster.parentNode = req.body.parentNode
+    nodeMaster.parent = req.body.parent
+    nodeMaster.level = req.body.level
+    nodeMaster.Collapsed = req.body.Collapsed
 
     await nodeMaster.save();
     return res.json(nodeMaster);
@@ -277,10 +286,12 @@ const updateDataNodeMaster = async (data: any) => {
     nodeMaster.targetPosition = data.targetPosition;
     nodeMaster.FontColor = data.FontColor
     nodeMaster.FontStyle = data.FontStyle
-    nodeMaster.parentNode = data.parentNode
+    nodeMaster.parent = data.parent
     nodeMaster.FontSize = data.FontSize
     nodeMaster.userId = data.userId
     nodeMaster.type = data.type
+    nodeMaster.level = data.level
+    nodeMaster.Collapsed = data.Collapsed
 
     await nodeMaster.save();
     return nodeMaster
@@ -313,10 +324,12 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.targetPosition = data.targetPosition;
     nodeMaster.FontColor = data.FontColor
     nodeMaster.FontStyle = data.FontStyle
-    nodeMaster.parentNode = data.parentNode
+    nodeMaster.parent = data.parent
     nodeMaster.FontSize = data.FontSize
     nodeMaster.userId = data.userId
     nodeMaster.type = data.type
+    nodeMaster.level = data.level
+    nodeMaster.Collapsed = data.Collapsed
     await nodeMaster.save();
 
     return nodeMaster
@@ -339,6 +352,26 @@ export const deleteNodeMaster = async (req: Request, res: Response) => {
     return InternalServerError(res, error);
   }
 };
+
+// export const deleteNodeMaster = async (req: Request, res: Response) => {
+//   try {
+//     const nodeIds = req.body
+//     console.log("nodeids for delete:",req.body);
+//     if (!nodeIds || nodeIds.length === 0) {
+//       return res.status(400).json({ error: 'No nodeIds provided' });
+//     }
+
+//     const nodeMasters = await NodeMaster.findByIds(nodeIds);
+//     if (nodeMasters.length === 0) {
+//       return res.status(404).json({ error: 'No nodeMasters found' });
+//     }
+
+//     await Promise.all(nodeMasters.map((nodeMaster) => nodeMaster.remove()));
+//     return res.status(204).end();
+//   } catch (error) {
+//     return InternalServerError(res, error);
+//   }
+// };
 
 export const nodeMasterById = async (req: Request, res: Response) => {
   try {
