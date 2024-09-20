@@ -28,6 +28,9 @@ const nodeMasterSchema = Joi.object({
   type: Joi.string().allow('', null),
   level: Joi.number().allow('', null),
   Collapsed: Joi.boolean().allow('', null),
+  constant: Joi.string().allow('', null),
+  value: Joi.number().allow('', null),
+  
   
   
 });
@@ -65,6 +68,8 @@ export const createNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.parent = req.body.parent
     nodeMaster.level = req.body.level
     nodeMaster.Collapsed = req.body.Collapsed
+    nodeMaster.constant = req.body.constant
+    nodeMaster.value = req.body.value
     await nodeMaster.save();
     return res.status(201).json(nodeMaster);
   } catch (error) {
@@ -116,6 +121,8 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
         nodeMaster.type = element.type
         nodeMaster.level = element.level
         nodeMaster.Collapsed = element.Collapsed
+        nodeMaster.constant = element.constant
+        nodeMaster.value = element.value
         responseData.push(await nodeMaster.save());
 
       }
@@ -181,6 +188,8 @@ export const updateNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.parent = req.body.parent
     nodeMaster.level = req.body.level
     nodeMaster.Collapsed = req.body.Collapsed
+    nodeMaster.constant = req.body.constant
+    nodeMaster.value = req.body.value
 
     await nodeMaster.save();
     return res.json(nodeMaster);
@@ -292,6 +301,8 @@ const updateDataNodeMaster = async (data: any) => {
     nodeMaster.type = data.type
     nodeMaster.level = data.level
     nodeMaster.Collapsed = data.Collapsed
+    nodeMaster.constant = data.constant
+    nodeMaster.value = data.value
 
     await nodeMaster.save();
     return nodeMaster
@@ -330,6 +341,8 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.type = data.type
     nodeMaster.level = data.level
     nodeMaster.Collapsed = data.Collapsed
+    nodeMaster.constant = data.constant
+    nodeMaster.value = data.value
     await nodeMaster.save();
 
     return nodeMaster
