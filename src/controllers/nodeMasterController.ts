@@ -30,21 +30,23 @@ const nodeMasterSchema = Joi.object({
   Collapsed: Joi.boolean().allow('', null),
   constant: Joi.string().allow('', null),
   value: Joi.number().allow('', null),
-  
-  
-  
+  modelid: Joi.number().allow('', null),
+  datatable: Joi.string().allow('', null),
+  datacolumn: Joi.string().allow('', null),
+  checkFlag: Joi.boolean().allow('', null),
+
 });
 
 
 export const createNodeMaster = async (req: Request, res: Response) => {
-  console.log("request body:",req.body)
+  console.log("request body:", req.body)
   const { error } = nodeMasterSchema.validate(req.body);
 
   if (error) {
     return res.status(400).json({ error: error.details[0].message });
   }
   try {
-    
+
     const nodeMaster = new NodeMaster();
     nodeMaster.id = req.body.id;
     nodeMaster.nodeName = req.body.nodeName;
@@ -70,6 +72,10 @@ export const createNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.Collapsed = req.body.Collapsed
     nodeMaster.constant = req.body.constant
     nodeMaster.value = req.body.value
+    nodeMaster.modelid = req.body.modelid
+    nodeMaster.datatable = req.body.datatable
+    nodeMaster.datacolumn = req.body.datacolumn
+    nodeMaster.checkFlag = req.body.checkFlag
     await nodeMaster.save();
     return res.status(201).json(nodeMaster);
   } catch (error) {
@@ -123,6 +129,10 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
         nodeMaster.Collapsed = element.Collapsed
         nodeMaster.constant = element.constant
         nodeMaster.value = element.value
+        nodeMaster.modelid = element.modelid
+        nodeMaster.datatable = element.datatable
+        nodeMaster.datacolumn = element.datacolumn
+        nodeMaster.checkFlag = element.checkFlag
         responseData.push(await nodeMaster.save());
 
       }
@@ -190,6 +200,10 @@ export const updateNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.Collapsed = req.body.Collapsed
     nodeMaster.constant = req.body.constant
     nodeMaster.value = req.body.value
+    nodeMaster.modelid = req.body.modelid
+    nodeMaster.datatable = req.body.datatable
+    nodeMaster.datacolumn = req.body.datacolumn
+    nodeMaster.checkFlag = req.body.checkFlag
 
     await nodeMaster.save();
     return res.json(nodeMaster);
@@ -250,7 +264,7 @@ export const updateBulkNodeMaster = async (req: Request, res: Response) => {
 //         console.log("elementid:",element);
 //         if (element.nodeId) {
 //           console.log("updating nodes.....",element);
-          
+
 //           nodeUpdateData = await updateDataNodeMaster(element)
 //         }
 
@@ -303,6 +317,10 @@ const updateDataNodeMaster = async (data: any) => {
     nodeMaster.Collapsed = data.Collapsed
     nodeMaster.constant = data.constant
     nodeMaster.value = data.value
+    nodeMaster.modelid = data.modelid
+    nodeMaster.datatable = data.datatable
+    nodeMaster.datacolumn = data.datacolumn
+    nodeMaster.checkFlag = data.checkFlag
 
     await nodeMaster.save();
     return nodeMaster
@@ -337,12 +355,16 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.FontStyle = data.FontStyle
     nodeMaster.parent = data.parent
     nodeMaster.FontSize = data.FontSize
-    nodeMaster.userId = data.userId
     nodeMaster.type = data.type
     nodeMaster.level = data.level
     nodeMaster.Collapsed = data.Collapsed
     nodeMaster.constant = data.constant
-    nodeMaster.value = data.value
+    nodeMaster.modelid = data.modelid
+    nodeMaster.userId = data.userId
+    nodeMaster.modelid = data.modelid
+    nodeMaster.datatable = data.datatable
+    nodeMaster.datacolumn = data.datacolumn
+    nodeMaster.checkFlag = data.checkFlag
     await nodeMaster.save();
 
     return nodeMaster
