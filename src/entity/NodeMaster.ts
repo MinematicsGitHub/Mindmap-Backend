@@ -85,6 +85,9 @@ export class NodeMaster extends BaseEntity {
   datacolumn:string;
 
   @Column({nullable: true })
+  aggregatedvalue:string;
+
+  @Column({nullable: true })
   checkFlag:boolean;
 
   // edge properties

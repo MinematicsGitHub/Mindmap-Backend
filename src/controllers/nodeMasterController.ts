@@ -33,6 +33,7 @@ const nodeMasterSchema = Joi.object({
   modelid: Joi.number().allow('', null),
   datatable: Joi.string().allow('', null),
   datacolumn: Joi.string().allow('', null),
+  aggregatedvalue: Joi.string().allow('', null),
   checkFlag: Joi.boolean().allow('', null),
 
 });
@@ -75,6 +76,7 @@ export const createNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.modelid = req.body.modelid
     nodeMaster.datatable = req.body.datatable
     nodeMaster.datacolumn = req.body.datacolumn
+    nodeMaster.aggregatedvalue = req.body.aggregatedvalue
     nodeMaster.checkFlag = req.body.checkFlag
     await nodeMaster.save();
     return res.status(201).json(nodeMaster);
@@ -132,6 +134,7 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
         nodeMaster.modelid = element.modelid
         nodeMaster.datatable = element.datatable
         nodeMaster.datacolumn = element.datacolumn
+        nodeMaster.aggregatedvalue = element.aggregatedvalue
         nodeMaster.checkFlag = element.checkFlag
         responseData.push(await nodeMaster.save());
 
@@ -203,6 +206,7 @@ export const updateNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.modelid = req.body.modelid
     nodeMaster.datatable = req.body.datatable
     nodeMaster.datacolumn = req.body.datacolumn
+    nodeMaster.aggregatedvalue = req.body.aggregatedvalue
     nodeMaster.checkFlag = req.body.checkFlag
 
     await nodeMaster.save();
@@ -320,6 +324,7 @@ const updateDataNodeMaster = async (data: any) => {
     nodeMaster.modelid = data.modelid
     nodeMaster.datatable = data.datatable
     nodeMaster.datacolumn = data.datacolumn
+    nodeMaster.aggregatedvalue = data.aggregatedvalue
     nodeMaster.checkFlag = data.checkFlag
 
     await nodeMaster.save();
@@ -364,6 +369,7 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.modelid = data.modelid
     nodeMaster.datatable = data.datatable
     nodeMaster.datacolumn = data.datacolumn
+    nodeMaster.aggregatedvalue = data.aggregatedvalue
     nodeMaster.checkFlag = data.checkFlag
     await nodeMaster.save();
 
