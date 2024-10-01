@@ -58,8 +58,6 @@ export const getTableData = async (req: Request, res: Response) => {
   try {
     await sql.connect(config);
     const tableName = req.params.table;
-    console.log("table",typeof req.params.table)
-
     let result = await new sql.Request().query(`SELECT * FROM ${String(tableName)}`);
     console.log("tablename", req.params.tablename, result)
 
@@ -67,7 +65,6 @@ export const getTableData = async (req: Request, res: Response) => {
 
     return res.json({ data });
   } catch (error) {
-    console.log("tablename", error)
 
     return InternalServerError(res, error);
   } finally {

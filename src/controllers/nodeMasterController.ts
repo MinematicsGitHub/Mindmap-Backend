@@ -286,6 +286,30 @@ export const updateBulkNodeMaster = async (req: Request, res: Response) => {
 //   }
 
 // };
+export const updateCheckFlagNodeMaster = async (req: Request, res: Response) => {
+  console.log("nodeid **:",)
+  const nodeId = req.params.nodeId;
+  const { checkFlag } = req.body;
+  try {
+    // Find the node master by nodeId
+    const nodeMaster = await NodeMaster.findOne({ where: { nodeId } });
+
+    if (!nodeMaster) {
+      return res.status(404).json({ error: 'NodeMaster not found' });
+    }
+
+    // Update the checkFlag column
+    nodeMaster.checkFlag = checkFlag;
+
+    // Save the updated node master back to the database
+    await nodeMaster.save();
+
+    // Return the updated node master data
+    return res.json(nodeMaster);
+  } catch (error) {
+    return res.status(500).json({ error: 'An error occurred while updating checkFlag' });
+  }
+};
 
 const updateDataNodeMaster = async (data: any) => {
   const { error } = nodeMasterSchema.validate(data);
@@ -364,6 +388,7 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.level = data.level
     nodeMaster.Collapsed = data.Collapsed
     nodeMaster.constant = data.constant
+    nodeMaster.value = data.value
     nodeMaster.modelid = data.modelid
     nodeMaster.userId = data.userId
     nodeMaster.modelid = data.modelid
