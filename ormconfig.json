@@ -4,8 +4,8 @@
   "port": 1433,
   "username": "Nodejs",
   "password": "nodejs123",
-  "database": "Mindmap",
-  "synchronize": true,
+  "database": "Mindmap_v2.0",
+  "synchronize": false,
   "logging": true,
   "entities": ["dist/entity/**/*.js"],
   "cli": {
