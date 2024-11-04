@@ -6,11 +6,13 @@ import nodesConfiguration from "./NodesConfigRoutes";
 import egdesConfig from "./edgesConfigRoutes";
 import canvasConfig from "./canvasConfigRoutes"
 import dataconnectionRoutes from "./DataConnectionRouter"
+import NodeFormulaRoutes from "./nodeFormulaRoutes";
 
 let router = express.Router();
 
 router.use("/canvasMaster", canvasMaster);
 router.use("/nodeMaster", nodeMasterRouter);
+router.use("/nodeFormula", NodeFormulaRoutes);
 router.use("/edgeMaster", edgeMasterRoutes);
 router.use("/nodesConfig", nodesConfiguration);
 router.use("/edgesConfig", egdesConfig);

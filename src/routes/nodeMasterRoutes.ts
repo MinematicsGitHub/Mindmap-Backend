@@ -4,13 +4,13 @@ import {
   getAllNodeMaster,
   // updateNodeMaster,
   deleteNodeMaster,
-  nodeMasterById,
   // createBulkNodeMaster,
   updateBulkNodeMaster,
   getNodes,
   updateCheckFlagNodeMaster,
   // uploadFile
 } from "../controllers/nodeMasterController";
+
 
 let router = express.Router();
 router.get("/",getAllNodeMaster);

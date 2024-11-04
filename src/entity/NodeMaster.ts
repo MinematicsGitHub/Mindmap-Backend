@@ -77,6 +77,10 @@ export class NodeMaster extends BaseEntity {
 
   @Column({nullable: true })
   value:number;
+  
+  @Column({nullable: true })
+  operator:string;
+
 
   @Column({nullable: true })
   datatable:string;

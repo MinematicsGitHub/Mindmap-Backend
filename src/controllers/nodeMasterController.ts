@@ -30,6 +30,7 @@ const nodeMasterSchema = Joi.object({
   Collapsed: Joi.boolean().allow('', null),
   constant: Joi.string().allow('', null),
   value: Joi.number().allow('', null),
+  operator: Joi.string().allow('', null),
   modelid: Joi.number().allow('', null),
   datatable: Joi.string().allow('', null),
   datacolumn: Joi.string().allow('', null),
@@ -73,6 +74,7 @@ export const createNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.Collapsed = req.body.Collapsed
     nodeMaster.constant = req.body.constant
     nodeMaster.value = req.body.value
+    nodeMaster.operator = req.body.operator
     nodeMaster.modelid = req.body.modelid
     nodeMaster.datatable = req.body.datatable
     nodeMaster.datacolumn = req.body.datacolumn
@@ -131,6 +133,7 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
         nodeMaster.Collapsed = element.Collapsed
         nodeMaster.constant = element.constant
         nodeMaster.value = element.value
+        nodeMaster.operator = element.operator
         nodeMaster.modelid = element.modelid
         nodeMaster.datatable = element.datatable
         nodeMaster.datacolumn = element.datacolumn
@@ -203,6 +206,7 @@ export const updateNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.Collapsed = req.body.Collapsed
     nodeMaster.constant = req.body.constant
     nodeMaster.value = req.body.value
+    nodeMaster.operator = req.body.operator
     nodeMaster.modelid = req.body.modelid
     nodeMaster.datatable = req.body.datatable
     nodeMaster.datacolumn = req.body.datacolumn
@@ -345,6 +349,7 @@ const updateDataNodeMaster = async (data: any) => {
     nodeMaster.Collapsed = data.Collapsed
     nodeMaster.constant = data.constant
     nodeMaster.value = data.value
+    nodeMaster.operator = data.operator
     nodeMaster.modelid = data.modelid
     nodeMaster.datatable = data.datatable
     nodeMaster.datacolumn = data.datacolumn
@@ -389,6 +394,7 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.Collapsed = data.Collapsed
     nodeMaster.constant = data.constant
     nodeMaster.value = data.value
+    nodeMaster.operator = data.operator
     nodeMaster.modelid = data.modelid
     nodeMaster.userId = data.userId
     nodeMaster.modelid = data.modelid
