@@ -10,7 +10,9 @@ const canvasCongifSchema = Joi.object({
   Pattern: Joi.string().allow(null,''),
   TextSize: Joi.number().allow(null,''),
   FontStyle: Joi.string().allow(null,''),
-  userId: Joi.string().allow('', null)
+  userId: Joi.string().allow('', null),
+  modelid: Joi.string().allow('', null),
+  modelName: Joi.string().allow('', null)
 });
 
 
@@ -28,6 +30,8 @@ export const createCanvasConfig = async (req: Request, res: Response) => {
     canvasconfig.TextSize = req.body.TextSize;
     canvasconfig.FontStyle = req.body.FontStyle;
     canvasconfig.userId = req.body.userId;
+    canvasconfig.modelid = req.body.modelid;
+    canvasconfig.modelName = req.body.modelName;
     await canvasconfig.save();
     return res.status(201).json(canvasconfig);
   } catch (error) {
@@ -63,6 +67,8 @@ export const updateCanvasConfig = async (req: Request, res: Response) => {
     canvasconfig.TextSize = req.body.TextSize;
     canvasconfig.FontStyle = req.body.FontStyle;
     canvasconfig.userId = req.body.userId;
+    canvasconfig.modelid = req.body.modelid;
+    canvasconfig.modelName = req.body.modelName;
 
     await canvasconfig.save();
     return res.json(canvasconfig);

@@ -26,6 +26,12 @@ import {
          
           @Column({nullable:true})
           userId: string;
+
+          @Column({nullable:true})
+          modelid: string;
+
+          @Column({nullable:true})
+          modelName: string;
         
           @CreateDateColumn()
           DateTime: Date

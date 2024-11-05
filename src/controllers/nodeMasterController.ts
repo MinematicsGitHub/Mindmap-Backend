@@ -30,7 +30,7 @@ const nodeMasterSchema = Joi.object({
   Collapsed: Joi.boolean().allow('', null),
   constant: Joi.string().allow('', null),
   value: Joi.number().allow('', null),
-  modelid: Joi.number().allow('', null),
+  modelid: Joi.string().allow('', null),
   datatable: Joi.string().allow('', null),
   datacolumn: Joi.string().allow('', null),
   aggregatedvalue: Joi.string().allow('', null),
