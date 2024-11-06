@@ -55,7 +55,7 @@ import {
           userId: string;
 
           @Column({nullable:true})
-          modelid: number;
+          modelid: string;
         
           @CreateDateColumn()
           DateTime: Date

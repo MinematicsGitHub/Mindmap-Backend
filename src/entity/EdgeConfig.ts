@@ -52,6 +52,9 @@ import {
           EdgeType: string;
          
           @Column({nullable:true})
+          modelid: string;
+
+          @Column({nullable:true})
           userId: string;
         
           @CreateDateColumn()

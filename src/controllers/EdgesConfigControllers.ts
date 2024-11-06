@@ -6,6 +6,7 @@ import { EdgesConfig } from "../entity/EdgeConfig";
 
 
 const edgeCongifSchema = Joi.object({
+  Id: Joi.number().optional(),  // Add this line to allow Id
   EdgeColor: Joi.string().allow(null,''),
   EdgeThickness: Joi.number().allow(null,''),
   EdgeArrow: Joi.string().allow(null,''),
@@ -20,6 +21,7 @@ const edgeCongifSchema = Joi.object({
   EdgeTitlePosition: Joi.string().allow('', null),
   EdgeType: Joi.string().allow('', null),
   userId: Joi.string().allow('', null),
+  modelid: Joi.string().allow('', null),
   
 });
 
@@ -47,6 +49,7 @@ export const createEdgeConfig = async (req: Request, res: Response) => {
     edgeconfig.EdgeTitlePosition = req.body.EdgeTitlePosition;
     edgeconfig.EdgeType = req.body.EdgeType;
     edgeconfig.userId = req.body.userId
+    edgeconfig.modelid = req.body.modelid
     await edgeconfig.save();
     return res.status(201).json(edgeconfig);
   } catch (error) {
@@ -91,6 +94,7 @@ export const updateEdgeConfig = async (req: Request, res: Response) => {
     edgeconfig.EdgeTitlePosition = req.body.EdgeTitlePosition;
     edgeconfig.EdgeType = req.body.EdgeType;
     edgeconfig.userId = req.body.userId
+    edgeconfig.modelid = req.body.modelid
 
     await edgeconfig.save();
     return res.json(edgeconfig);
@@ -120,7 +124,7 @@ export const updateBulkEdgeConfig = async (req: Request, res: Response) => {
         const element = EdgeConfigData[i];
         let edgeconfigUpdateData: any;
 
-        if (element.id) {
+        if (element.Id) {
           console.log("update");
           edgeconfigUpdateData = await updateEdgeConfigData(element)
         }
@@ -147,7 +151,7 @@ export const updateEdgeConfigData = async (data: any) => {
   }
 
   try {
-    const edgeconfig = await EdgesConfig.findOne(data.id);
+    const edgeconfig = await EdgesConfig.findOne(data.Id);
     if (!edgeconfig) {
       return { error: ' batch not found' }
     }
@@ -165,6 +169,7 @@ export const updateEdgeConfigData = async (data: any) => {
     edgeconfig.EdgeTitlePosition = data.EdgeTitlePosition;
     edgeconfig.EdgeType = data.EdgeType;
     edgeconfig.userId = data.userId;
+    edgeconfig.modelid = data.modelid;
 
     await edgeconfig.save();
     return edgeconfig
@@ -197,6 +202,7 @@ export const createEdgeConfigData = async (data: any) => {
     edgeconfig.EdgeTitlePosition = data.EdgeTitlePosition;
     edgeconfig.EdgeType = data.EdgeType;
     edgeconfig.userId = data.userId;
+    edgeconfig.modelid = data.modelid;
     await edgeconfig.save();
 
     return edgeconfig

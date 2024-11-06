@@ -4,6 +4,7 @@ import * as Joi from "joi";
 import { NodesConfig } from "../entity/NodesConfig";
 
 const nodeCongifSchema = Joi.object({
+  Id: Joi.number().optional(),  // Add this line to allow Id
   width: Joi.string().allow(null, ""),
   height: Joi.string().allow(null, ""),
   borderRadius: Joi.number().allow(null, ""),
@@ -17,7 +18,7 @@ const nodeCongifSchema = Joi.object({
   labelPosition: Joi.string().allow(null, ""),
   labelColor: Joi.string().allow(null, ""),
   userId: Joi.string().allow(null, ""),
-  modelid: Joi.number().allow(null, ""),
+  modelid: Joi.string().allow(null, ""),
   Collapse: Joi.boolean().allow(null, ""),
 });
 
@@ -116,7 +117,7 @@ export const updateBulkNodesConfig = async (req: Request, res: Response) => {
         const element = nodeconfigData[i];
         let nodesconfigUpdateData: any;
 
-        if (element.id) {
+        if (element.Id) {
           console.log("update");
           nodesconfigUpdateData = await updateDataNodesConfig(element);
         } else {
@@ -140,7 +141,7 @@ export const updateDataNodesConfig = async (data: any) => {
   }
 
   try {
-    const nodeconfig = await NodesConfig.findOne(data.id);
+    const nodeconfig = await NodesConfig.findOne(data.Id);
     if (!nodeconfig) {
       return { error: " nodeconfig not found" };
     }
