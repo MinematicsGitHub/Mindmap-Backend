@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { InternalServerError } from "../response/InternalServerErrorResponse";
 import * as Joi from "joi";
 import { NodeMaster } from "../entity/NodeMaster";
+// import authorize from "./path/to/authorize"; // adjust the path as needed
+const authorize = require('../middleware/authorize');
 
 
 
@@ -148,7 +150,7 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
 };
 
 export const getAllNodeMaster = async (_: Request, res: Response) => {
-  console.log("getallnodes",)
+
   try {
     const nodeMasteres = await NodeMaster.find();
     return res.json(nodeMasteres);

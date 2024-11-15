@@ -6,10 +6,10 @@ import {
 
 let router = express.Router();
 
-router.put("/bulk", updateBulkCanvasConfig);
 router.get("/",getAllCanvasConfig);
 router.post("/",createCanvasConfig);
 router.get("/:id",canvasConfigById);
+router.put("/bulk", updateBulkCanvasConfig);
 router.put("/:id", updateCanvasConfig);
 router.delete("/:id",deleteCanvasConfig);
 
