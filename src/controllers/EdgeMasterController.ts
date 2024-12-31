@@ -10,9 +10,9 @@ const edgeMasterSchema = Joi.object({
   targetId: Joi.string().required(),
   type: Joi.string().required(),
   strokeWidth: Joi.number().required(),
-  stroke: Joi.string().required(),
+  stroke: Joi.string().allow('', null),
   // animation: Joi.boolean().required(),
-  arrow: Joi.boolean().required(),
+  arrow: Joi.boolean().allow('', null),
   userId:Joi.string().required(),
 
 });

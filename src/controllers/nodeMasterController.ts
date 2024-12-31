@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { InternalServerError } from "../response/InternalServerErrorResponse";
 import * as Joi from "joi";
 import { NodeMaster } from "../entity/NodeMaster";
+// import authorize from "./path/to/authorize"; // adjust the path as needed
+const authorize = require('../middleware/authorize');
 
 
 
@@ -22,23 +24,32 @@ const nodeMasterSchema = Joi.object({
   targetPosition: Joi.string().allow('', null),
   FontColor: Joi.string().allow('', null),
   FontStyle: Joi.string().allow('', null),
-  parentNode: Joi.string().allow('', null),
+  parent: Joi.string().allow('', null),
   FontSize: Joi.string().allow('', null),
   userId: Joi.string().required(),
   type: Joi.string().allow('', null),
-  
+  level: Joi.number().allow('', null),
+  Collapsed: Joi.boolean().allow('', null),
+  constant: Joi.string().allow('', null),
+  value: Joi.number().allow('', null),
+  modelid: Joi.string().allow('', null),
+  datatable: Joi.string().allow('', null),
+  datacolumn: Joi.string().allow('', null),
+  aggregatedvalue: Joi.string().allow('', null),
+  checkFlag: Joi.boolean().allow('', null),
+
 });
 
 
 export const createNodeMaster = async (req: Request, res: Response) => {
-  console.log("request body:",req.body)
+  console.log("request body:", req.body)
   const { error } = nodeMasterSchema.validate(req.body);
 
   if (error) {
     return res.status(400).json({ error: error.details[0].message });
   }
   try {
-    
+
     const nodeMaster = new NodeMaster();
     nodeMaster.id = req.body.id;
     nodeMaster.nodeName = req.body.nodeName;
@@ -59,7 +70,16 @@ export const createNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.userId = req.body.userId
     nodeMaster.borderRadius = req.body.borderRadius
     nodeMaster.type = req.body.type
-    nodeMaster.parentNode = req.body.parentNode
+    nodeMaster.parent = req.body.parent
+    nodeMaster.level = req.body.level
+    nodeMaster.Collapsed = req.body.Collapsed
+    nodeMaster.constant = req.body.constant
+    nodeMaster.value = req.body.value
+    nodeMaster.modelid = req.body.modelid
+    nodeMaster.datatable = req.body.datatable
+    nodeMaster.datacolumn = req.body.datacolumn
+    nodeMaster.aggregatedvalue = req.body.aggregatedvalue
+    nodeMaster.checkFlag = req.body.checkFlag
     await nodeMaster.save();
     return res.status(201).json(nodeMaster);
   } catch (error) {
@@ -105,10 +125,19 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
         nodeMaster.targetPosition = element.targetPosition;
         nodeMaster.FontColor = element.FontColor
         nodeMaster.FontStyle = element.FontStyle
-        nodeMaster.parentNode = element.parentNode
+        nodeMaster.parent = element.parent
         nodeMaster.FontSize = element.FontSize
         nodeMaster.userId = element.userId
         nodeMaster.type = element.type
+        nodeMaster.level = element.level
+        nodeMaster.Collapsed = element.Collapsed
+        nodeMaster.constant = element.constant
+        nodeMaster.value = element.value
+        nodeMaster.modelid = element.modelid
+        nodeMaster.datatable = element.datatable
+        nodeMaster.datacolumn = element.datacolumn
+        nodeMaster.aggregatedvalue = element.aggregatedvalue
+        nodeMaster.checkFlag = element.checkFlag
         responseData.push(await nodeMaster.save());
 
       }
@@ -121,7 +150,7 @@ export const createBulkNodeMaster = async (req: Request, res: Response) => {
 };
 
 export const getAllNodeMaster = async (_: Request, res: Response) => {
-  console.log("getallnodes",)
+
   try {
     const nodeMasteres = await NodeMaster.find();
     return res.json(nodeMasteres);
@@ -171,7 +200,16 @@ export const updateNodeMaster = async (req: Request, res: Response) => {
     nodeMaster.FontSize = req.body.FontSize
     nodeMaster.userId = req.body.userId
     nodeMaster.type = req.body.type
-    nodeMaster.parentNode = req.body.parentNode
+    nodeMaster.parent = req.body.parent
+    nodeMaster.level = req.body.level
+    nodeMaster.Collapsed = req.body.Collapsed
+    nodeMaster.constant = req.body.constant
+    nodeMaster.value = req.body.value
+    nodeMaster.modelid = req.body.modelid
+    nodeMaster.datatable = req.body.datatable
+    nodeMaster.datacolumn = req.body.datacolumn
+    nodeMaster.aggregatedvalue = req.body.aggregatedvalue
+    nodeMaster.checkFlag = req.body.checkFlag
 
     await nodeMaster.save();
     return res.json(nodeMaster);
@@ -232,7 +270,7 @@ export const updateBulkNodeMaster = async (req: Request, res: Response) => {
 //         console.log("elementid:",element);
 //         if (element.nodeId) {
 //           console.log("updating nodes.....",element);
-          
+
 //           nodeUpdateData = await updateDataNodeMaster(element)
 //         }
 
@@ -250,6 +288,30 @@ export const updateBulkNodeMaster = async (req: Request, res: Response) => {
 //   }
 
 // };
+export const updateCheckFlagNodeMaster = async (req: Request, res: Response) => {
+  console.log("nodeid **:",)
+  const nodeId = req.params.nodeId;
+  const { checkFlag } = req.body;
+  try {
+    // Find the node master by nodeId
+    const nodeMaster = await NodeMaster.findOne({ where: { nodeId } });
+
+    if (!nodeMaster) {
+      return res.status(404).json({ error: 'NodeMaster not found' });
+    }
+
+    // Update the checkFlag column
+    nodeMaster.checkFlag = checkFlag;
+
+    // Save the updated node master back to the database
+    await nodeMaster.save();
+
+    // Return the updated node master data
+    return res.json(nodeMaster);
+  } catch (error) {
+    return res.status(500).json({ error: 'An error occurred while updating checkFlag' });
+  }
+};
 
 const updateDataNodeMaster = async (data: any) => {
   const { error } = nodeMasterSchema.validate(data);
@@ -277,10 +339,19 @@ const updateDataNodeMaster = async (data: any) => {
     nodeMaster.targetPosition = data.targetPosition;
     nodeMaster.FontColor = data.FontColor
     nodeMaster.FontStyle = data.FontStyle
-    nodeMaster.parentNode = data.parentNode
+    nodeMaster.parent = data.parent
     nodeMaster.FontSize = data.FontSize
     nodeMaster.userId = data.userId
     nodeMaster.type = data.type
+    nodeMaster.level = data.level
+    nodeMaster.Collapsed = data.Collapsed
+    nodeMaster.constant = data.constant
+    nodeMaster.value = data.value
+    nodeMaster.modelid = data.modelid
+    nodeMaster.datatable = data.datatable
+    nodeMaster.datacolumn = data.datacolumn
+    nodeMaster.aggregatedvalue = data.aggregatedvalue
+    nodeMaster.checkFlag = data.checkFlag
 
     await nodeMaster.save();
     return nodeMaster
@@ -313,10 +384,20 @@ const createDataNodeMaster = async (data: any) => {
     nodeMaster.targetPosition = data.targetPosition;
     nodeMaster.FontColor = data.FontColor
     nodeMaster.FontStyle = data.FontStyle
-    nodeMaster.parentNode = data.parentNode
+    nodeMaster.parent = data.parent
     nodeMaster.FontSize = data.FontSize
-    nodeMaster.userId = data.userId
     nodeMaster.type = data.type
+    nodeMaster.level = data.level
+    nodeMaster.Collapsed = data.Collapsed
+    nodeMaster.constant = data.constant
+    nodeMaster.value = data.value
+    nodeMaster.modelid = data.modelid
+    nodeMaster.userId = data.userId
+    nodeMaster.modelid = data.modelid
+    nodeMaster.datatable = data.datatable
+    nodeMaster.datacolumn = data.datacolumn
+    nodeMaster.aggregatedvalue = data.aggregatedvalue
+    nodeMaster.checkFlag = data.checkFlag
     await nodeMaster.save();
 
     return nodeMaster
@@ -339,6 +420,26 @@ export const deleteNodeMaster = async (req: Request, res: Response) => {
     return InternalServerError(res, error);
   }
 };
+
+// export const deleteNodeMaster = async (req: Request, res: Response) => {
+//   try {
+//     const nodeIds = req.body
+//     console.log("nodeids for delete:",req.body);
+//     if (!nodeIds || nodeIds.length === 0) {
+//       return res.status(400).json({ error: 'No nodeIds provided' });
+//     }
+
+//     const nodeMasters = await NodeMaster.findByIds(nodeIds);
+//     if (nodeMasters.length === 0) {
+//       return res.status(404).json({ error: 'No nodeMasters found' });
+//     }
+
+//     await Promise.all(nodeMasters.map((nodeMaster) => nodeMaster.remove()));
+//     return res.status(204).end();
+//   } catch (error) {
+//     return InternalServerError(res, error);
+//   }
+// };
 
 export const nodeMasterById = async (req: Request, res: Response) => {
   try {

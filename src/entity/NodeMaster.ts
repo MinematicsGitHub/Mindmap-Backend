@@ -64,10 +64,47 @@ export class NodeMaster extends BaseEntity {
   type: string;
 
   @Column({nullable: true })
-  parentNode:string;
+  parent:string;
+
+  @Column({nullable: true })
+  level:number;
+
+  @Column({nullable: true })
+  Collapsed:Boolean;
+
+  @Column({nullable: true })
+  constant:string;
+
+  @Column({nullable: true })
+  value:number;
+
+  @Column({nullable: true })
+  datatable:string;
+
+  @Column({nullable: true })
+  datacolumn:string;
+
+  @Column({nullable: true })
+  aggregatedvalue:string;
+
+  @Column({nullable: true })
+  checkFlag:boolean;
+
+  // edge properties
+  // @Column({nullable: true })
+  // stroke:string;  
+
+  // @Column({nullable: true })
+  // strokeWidth:number;
+
+  // @Column({nullable: true })
+  // edgetype:string;  
  
-  @Column()
+  @Column({nullable:true})
   userId: string;
+
+  @Column({nullable:true})
+  modelid:string;
 
   @CreateDateColumn()
   DateTime: Date

@@ -15,8 +15,7 @@ try {
 
   dotenv.config();
 
-  const PORT = process.env.PORT || 5001;
-
+  const PORT = process.env.PORT || 5009;
   const app = express();
   var bodyParser = require('body-parser');
   app.use(bodyParser.json({ limit: '50mb' }));
@@ -28,14 +27,15 @@ try {
   app.use(cors(
     {
       origin: [
+        // "http://192.168.29.140:8081",
         "http://localhost:3000",
-        // "http://localhost:3001",
-        "http://192.168.43.197:3001", // give correct IP
+        "http://192.168.43.197:3002", // give correct IP
       ],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],
     }
   ))
+
   app.use(cookieParser());
 
   app.use(

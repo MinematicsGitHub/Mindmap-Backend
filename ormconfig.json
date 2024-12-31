@@ -1,9 +1,9 @@
 {
   "type": "mssql",
-  "host": "DELL-PC",
+  "host": "JESHWANTH",
   "port": 1433,
-  "username": "Nodejs1",
-  "password": "Nodejs@1234",
+  "username": "jeshwanth",
+  "password": "12345678",
   "database": "Mindmap",
   "synchronize": true,
   "logging": true,
