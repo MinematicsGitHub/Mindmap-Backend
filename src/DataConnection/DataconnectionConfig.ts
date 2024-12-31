@@ -1,10 +1,9 @@
 export const DataConfig = {
-    user: 'Nodejs',
-    password: 'nodejs123',
-    server: 'DELL-PC',
-    database: 'Mindmap',
-    // options: {
-    //   encrypt: true, // For Azure SQL Database
-    // },
-  };
-
+  user: "Minematics",
+  password: "mines@123",
+  server: "286-19771",
+  database: "MindMap",
+  // options: {
+  //   encrypt: true, // For Azure SQL Database
+  // },
+};

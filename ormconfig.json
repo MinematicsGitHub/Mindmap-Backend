@@ -1,15 +1,15 @@
 {
   "type": "mssql",
-  "host": "DELL-PC",
+  "host": "JESHWANTH",
   "port": 1433,
-  "username": "Nodejs",
-  "password": "nodejs123",
+  "username": "jeshwanth",
+  "password": "12345678",
   "database": "Mindmap",
   "synchronize": true,
   "logging": true,
   "entities": ["dist/entity/**/*.js"],
   "cli": {
-      "entitiesDir": "./src/entity"
+    "entitiesDir": "./src/entity"
   },
   "useUnifiedTopology": true,
   "requestTimeout": 40000
